@@ -24,7 +24,7 @@ app.use('/api/flores', floresRoutes);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('Conectado a MongoDB');
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`Servidor corriendo en http://localhost:${PORT}`);
     });
   })
