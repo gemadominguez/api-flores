@@ -1,27 +1,33 @@
-const express = require('express')
-const cors = require('cors')
-const dotenv = require('dotenv')
-const helmet = require('helmet')
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const helmet = require('helmet');
+const mongoose = require('mongoose');
 
-const connectDB = require('./config/db')
-const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/auth');
+const floresRoutes = require('./routes/flores');
 
-const floresRoutes = require('./routes/flores')
+dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-dotenv.config()
-const app = express()
+// Middlewares
+app.use(express.json());
+app.use(cors());
+app.use(helmet());
 
-connectDB()
+// Rutas
+app.use('/api', authRoutes);
+app.use('/api/flores', floresRoutes);
 
-app.use(express.json())
-app.use(cors())
-app.use(helmet())
-
-app.use('/api', authRoutes)
-
-app.use('/api/flores', floresRoutes)
-
-const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`)
-})
+// Conexión a MongoDB 
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('Conectado a MongoDB');
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('Error al conectar a MongoDB:', err);
+  });
