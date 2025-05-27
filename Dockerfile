@@ -14,6 +14,7 @@ RUN npm install
 COPY . .
 
 # 6. Exponer el puerto de la API
+ENV PORT=3000
 EXPOSE 3000
 
 # 7. Comando para ejecutar la app
