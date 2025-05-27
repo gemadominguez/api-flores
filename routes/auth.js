@@ -25,7 +25,7 @@ try {
     res.status(201).json({ message: 'Usuario registrado correctamente' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error en el servidor' });
+    res.status(500).json({ message: 'Error en el servidor', error: err.message });
   }
 });
 
@@ -48,7 +48,7 @@ try {
     res.json({ token });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error en el servidor' });
+    res.status(500).json({ message: 'Error en el servidor', error: err.message });
   }
 });
 
