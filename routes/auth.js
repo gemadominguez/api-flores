@@ -24,6 +24,7 @@ try {
 
     res.status(201).json({ message: 'Usuario registrado correctamente' });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: 'Error en el servidor' });
   }
 });
@@ -46,6 +47,7 @@ try {
     const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: 'Error en el servidor' });
   }
 });
